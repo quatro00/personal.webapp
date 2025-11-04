@@ -2,22 +2,28 @@ import { Injectable } from '@angular/core';
 import { FuseNavigationItem } from '@fuse/components/navigation';
 import { FuseMockApiService } from '@fuse/lib/mock-api';
 import {
+    compactNavigation_admin,
+    defaultNavigation_admin,
+    futuristicNavigation_admin,
+    horizontalNavigation_admin,
+
     compactNavigation,
     defaultNavigation,
     futuristicNavigation,
     horizontalNavigation,
+    
 } from 'app/mock-api/common/navigation/data';
 import { cloneDeep } from 'lodash-es';
 
 @Injectable({ providedIn: 'root' })
 export class NavigationMockApi {
-    private readonly _compactNavigation: FuseNavigationItem[] =
+    private _compactNavigation: FuseNavigationItem[] =
         compactNavigation;
-    private readonly _defaultNavigation: FuseNavigationItem[] =
+    private _defaultNavigation: FuseNavigationItem[] =
         defaultNavigation;
-    private readonly _futuristicNavigation: FuseNavigationItem[] =
+    private _futuristicNavigation: FuseNavigationItem[] =
         futuristicNavigation;
-    private readonly _horizontalNavigation: FuseNavigationItem[] =
+    private _horizontalNavigation: FuseNavigationItem[] =
         horizontalNavigation;
 
     /**
@@ -36,6 +42,43 @@ export class NavigationMockApi {
      * Register Mock API handlers
      */
     registerHandlers(): void {
+        //buscamos el rol
+
+        const userData = localStorage.getItem('user');
+        var roles: any[];
+        var rol = '';
+        if (userData) {
+            roles = JSON.parse(userData).roles;
+        }
+        console.log(roles);
+        if (roles != null) {
+            if (roles.indexOf('Administrador') != -1 && rol == '') { rol = 'Administrador' }
+            if (roles.indexOf('Supervisor') != -1 && rol == '') { rol = 'Supervisor' }
+            if (roles.indexOf('Responsable de area') != -1 && rol == '') { rol = 'Responsable de area' }
+        }
+
+        if (rol == 'Administrador') {
+            this._compactNavigation = compactNavigation_admin;
+            this._defaultNavigation = defaultNavigation_admin;
+            this._futuristicNavigation = futuristicNavigation_admin;
+            this._horizontalNavigation = horizontalNavigation_admin;
+        }
+
+        /*
+        if (rol == 'Responsable de area') {
+            this._compactNavigation = compactNavigation_responsable;
+            this._defaultNavigation = defaultNavigation_responsable;
+            this._futuristicNavigation = futuristicNavigation_responsable;
+            this._horizontalNavigation = horizontalNavigation_responsable;
+        }
+
+        if (rol == 'Supervisor') {
+            this._compactNavigation = compactNavigation_supervisor;
+            this._defaultNavigation = defaultNavigation_supervisor;
+            this._futuristicNavigation = futuristicNavigation_supervisor;
+            this._horizontalNavigation = horizontalNavigation_supervisor;
+        }
+        */
         // -----------------------------------------------------------------------------------------------------
         // @ Navigation - GET
         // -----------------------------------------------------------------------------------------------------
