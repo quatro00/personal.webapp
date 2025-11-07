@@ -10,6 +10,13 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
         link : '/admin/home'
     },
     {
+        id   : 'notificaciones',
+        title: 'Notificaciones',
+        type : 'basic',
+        icon : 'heroicons_outline:envelope',
+        link : '/admin/notificaciones'
+    },
+    {
         id      : 'administracion',
         title   : 'Administración',
         type    : 'collapsable',
@@ -42,7 +49,27 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
                 link : '/admin/catalogo-conceptos'
             }
         ]
-    }
+    },
+    {
+        id      : 'reportes',
+        title   : 'Reportes',
+        type    : 'collapsable',
+        icon    : 'heroicons_outline:document-chart-bar',
+        children: [
+            {
+                id   : 'reporte-trabajador',
+                title: 'Reporte de trabajador',
+                type : 'basic',
+                link : '/admin/reporte-trabajador'
+            },
+            {
+                id   : 'reporte-quincena',
+                title: 'Reporte de quincena',
+                type : 'basic',
+                link : '/admin/reporte-quincena'
+            }
+        ]
+    },
 ];
 export const compactNavigation_admin: FuseNavigationItem[] = [
     {
