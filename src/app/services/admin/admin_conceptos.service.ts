@@ -8,7 +8,7 @@ import { environment } from '../../../enviroments/environment';
 })
 export class admin_ConceptosService {
 
-  service:string = 'administrador/conceptos';
+  service:string = 'administrador/concepto';
 
 
   constructor(private http:HttpClient) { }

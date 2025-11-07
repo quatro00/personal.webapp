@@ -18,6 +18,9 @@ import { MatDialog } from '@angular/material/dialog';
 import { CommonModule } from '@angular/common';
 import { ConceptoFormComponent } from 'app/components/admin/concepto-form/concepto-form.component';
 import { admin_ConceptosService } from 'app/services/admin/admin_conceptos.service';
+import { admin_OrganizacionService } from 'app/services/admin/admin_organizacion.service';
+import { forkJoin } from 'rxjs';
+import { AlertService } from 'app/services/alert.service';
 
 @Component({
   selector: 'app-catalogo-conceptos',
@@ -68,15 +71,20 @@ searchInputControl: UntypedFormControl = new UntypedFormControl();
   dataSource = new MatTableDataSource<any>([]);
 
   @ViewChild(MatSort) sort!: MatSort;
-
+  organizaciones = [];
   constructor(
     private dialog: MatDialog,
-    private admin_ConceptosService:admin_ConceptosService
+    private admin_ConceptosService:admin_ConceptosService,
+    private admin_organizacionService: admin_OrganizacionService,
+    private alertService: AlertService,
   ) { }
 
   nuevaOrganizacion(): void {
     const dialogRef = this.dialog.open(ConceptoFormComponent, {
       width: '500px',
+      data: {
+        organizaciones: this.organizaciones
+      }
     });
 
     dialogRef.afterClosed().subscribe(result => {
@@ -149,35 +157,16 @@ searchInputControl: UntypedFormControl = new UntypedFormControl();
   }
   loadData(): void {
     //this.isLoading = true;
-
-    // Simulación de carga (reemplazar con servicio real)
-    console.log(1);
-    this.admin_ConceptosService.GetAll()
-    .subscribe({
-          next: (response) => {
-            console.log(response);
-            this.dataSource.data = response;
-          },
-          error:(err)=>{
-            //this.msg.error(err.error.message);
-            //this.loadData();
-          },
-          complete() {
-            this.isLoading = false;
-          },
-        });
-
-        /*
-    setTimeout(() => {
-      this.dataSource.data = [
-        { clave: 'ORG01', nombre: 'Hospital Central', telefono: '8123456789', direccion: 'Av. Salud 123', responsable: 'Dr. Pérez', activo: true },
-        { clave: 'ORG02', nombre: 'Clínica Norte', telefono: '8187654321', direccion: 'Calle 45 Norte', responsable: 'Lic. Martínez', activo: false },
-        // ... más datos
-      ];
-
-      this.dataSource.sort = this.sort;
-      this.isLoading = false;
-    }, 800);
-    */
+    //buscamos las organizaciones
+    forkJoin([this.admin_organizacionService.GetAll(), this.admin_ConceptosService.GetAll()]).subscribe({
+      next: ([catOrganizacionResponse, admin_ConceptosResponse]) => {
+        this.organizaciones = catOrganizacionResponse;
+        this.dataSource.data = admin_ConceptosResponse;
+      },
+      complete: () => { },
+      error: (err) => {
+        this.alertService.showError('Error', err.error);
+      }
+    });
   }
 }

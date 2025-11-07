@@ -1,5 +1,16 @@
 <h2 mat-dialog-title>Registrar concepto</h2>
 <mat-dialog-content [formGroup]="form" class="flex flex-col gap-4 pt-2">
+
+  <mat-form-field appearance="outline">
+    <mat-label>Organización</mat-label>
+    <mat-select formControlName="organizacionId">
+      <mat-option [value]="''">Seleccione...</mat-option>
+      <mat-option *ngFor="let item of organizaciones" [value]="item.id">
+        {{ item.nombre }}
+      </mat-option>
+    </mat-select>
+  </mat-form-field>
+
   <mat-form-field appearance="outline">
     <mat-label>Clave</mat-label>
     <input matInput formControlName="clave" />
@@ -12,13 +23,17 @@
 
   <mat-form-field appearance="outline">
     <mat-label>Tipo de concepto</mat-label>
-    <input matInput formControlName="tipoConcepto" />
+    <mat-select formControlName="tipoConceptoId">
+      <mat-option [value]="''">Seleccione...</mat-option>
+      <mat-option *ngFor="let item of tipoConcepto" [value]="item.id">
+        {{ item.nombre }}
+      </mat-option>
+    </mat-select>
   </mat-form-field>
 </mat-dialog-content>
 
 <mat-dialog-actions align="end">
- <button class="fuse-mat-button" mat-flat-button [color]="'warn'" [disabled]="form.disabled"
-    (click)="cancel()">
+  <button class="fuse-mat-button" mat-flat-button [color]="'warn'" [disabled]="form.disabled" (click)="cancel()">
     <mat-icon class="mr-2 text-white">cancel</mat-icon>
     @if (!form.disabled) {
     <span> Cancelar </span>
@@ -28,8 +43,7 @@
     }
   </button>
 
-  <button class="fuse-mat-button" mat-flat-button [color]="'primary'" [disabled]="form.disabled"
-    (click)="save()">
+  <button class="fuse-mat-button" mat-flat-button [color]="'primary'" [disabled]="form.disabled" (click)="save()">
     <mat-icon class="mr-2 text-white">check</mat-icon>
     @if (!form.disabled) {
     <span> Guardar </span>

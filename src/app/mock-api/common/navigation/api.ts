@@ -50,7 +50,7 @@ export class NavigationMockApi {
         if (userData) {
             roles = JSON.parse(userData).roles;
         }
-        console.log(roles);
+        console.log('ROLES',roles);
         if (roles != null) {
             if (roles.indexOf('Administrador') != -1 && rol == '') { rol = 'Administrador' }
             if (roles.indexOf('Supervisor') != -1 && rol == '') { rol = 'Supervisor' }
