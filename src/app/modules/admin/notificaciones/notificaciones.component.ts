@@ -2,6 +2,7 @@ import { CommonModule } from '@angular/common';
 import { Component, OnInit } from '@angular/core';
 import { FormControl, FormsModule, ReactiveFormsModule, UntypedFormControl } from '@angular/forms';
 import { MatButton } from '@angular/material/button';
+import { MatCheckboxChange, MatCheckboxModule } from '@angular/material/checkbox';
 import { MatOptionModule } from '@angular/material/core';
 import { MatDatepickerModule } from '@angular/material/datepicker';
 import { MatDialog, MatDialogActions, MatDialogContent } from '@angular/material/dialog';
@@ -36,6 +37,7 @@ import { forkJoin } from 'rxjs';
     ReactiveFormsModule,
     MatFormFieldModule,
     MatDatepickerModule,
+    MatCheckboxModule,
     MatRadioModule,
     MatIcon,
     MatTooltipModule,
@@ -57,7 +59,7 @@ export class NotificacionesComponent {
   organizaciones: any[] = [];
   notificaciones: any[] = [];
 
-  columnas: string[] = ['quincena', 'matricula', 'nombre', 'detalle'];
+  columnas: string[] = ['quincena', 'matricula', 'nombre', 'detalle','notificacion'];
   detalleColumnas: string[] = ['fecha', 'concepto', 'descripcion', 'incEnt', 'incSal'];
 
   expandedRow: any = null;
@@ -90,8 +92,49 @@ export class NotificacionesComponent {
     });
   }
 
-  toggleRow(row: any) {
-    this.expandedRow = this.expandedRow === row ? null : row;
+  //metodos para marcar o desmarcar las filas
+   /** Marcar / desmarcar una fila */
+  
+  /** ¿Todos seleccionados? */
+  isAllSelected(): boolean {
+    return this.dataSource.data.length > 0 &&
+      this.dataSource.data.every(row => row.notificacion === true);
+  }
+
+  /** Marcar / desmarcar todos */
+  toggleAll(event: MatCheckboxChange) {
+    const checked = event.checked;
+    this.dataSource.data.forEach(row => row.notificacion = checked);
+  }
+
+  toggleRow(row: any, event: MatCheckboxChange) {
+    row.notificacion = event.checked;
+  }
+
+  /** Estado intermedio del checkbox header */
+  isIndeterminate(): boolean {
+    const selected = this.dataSource.data.filter(r => r.notificacion).length;
+    return selected > 0 && selected < this.dataSource.data.length;
+  }
+
+  /** Botón: mostrar seleccionados */
+  enviarCorreos() {
+    const seleccionados = this.dataSource.data.filter(r => r.notificacion);
+    this.isLoading = true;
+
+    this.admin_NotificacionService.EnviarNotificaciones(seleccionados).subscribe({
+      next: (data) => {
+        this.isLoading = false;
+        this.alertService.showSuccess('UMAE Especialidades NL', 'Notificaciones enviadas correctamente.');
+      },
+      error: (err) => {
+        this.alertService.showError('Error', err.error);
+        this.isLoading = false;
+      },
+      complete: () => {
+        this.isLoading = false;
+      }
+    });
   }
 
   isDetailRow = (_: any, row: any) => row === this.expandedRow;
@@ -119,7 +162,6 @@ export class NotificacionesComponent {
   buscarNotificaciones() {
 
     this.isLoading = true;
-    console.log(this.organizacionControl.value);
     if (this.organizacionControl.value == '0') { return; }
 
     this.admin_NotificacionService.CalcularNotificaciones({ organizacionId: this.organizacionControl.value }).subscribe({
@@ -137,7 +179,4 @@ export class NotificacionesComponent {
     });
   }
 
-  enviarCorreos(){
-    
-  }
 }

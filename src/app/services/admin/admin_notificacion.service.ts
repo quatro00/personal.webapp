@@ -15,4 +15,7 @@ export class admin_NotificacionService {
   CalcularNotificaciones(request:any):Observable<any>{
     return this.http.post<any>(`${environment.apiUrl}/${this.service}/CalcularNotificaciones`,request);
   }
+  EnviarNotificaciones(request:any):Observable<any>{
+    return this.http.post<any>(`${environment.apiUrl}/${this.service}/EnviarNotificaciones`,request);
+  }
 }
