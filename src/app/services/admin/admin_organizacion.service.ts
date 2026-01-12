@@ -38,4 +38,7 @@ console.log(`${environment.apiUrl}/${this.service}`);
     return this.http.put<any>(`${environment.apiUrl}/${this.service}/${id}`,request);
   }
 
+  GetQuincenas(id:any):Observable<any>{
+    return this.http.get<any>(`${environment.apiUrl}/${this.service}/GetQuincenas/${id}`);
+  }
 }

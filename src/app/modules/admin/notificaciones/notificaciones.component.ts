@@ -59,7 +59,7 @@ export class NotificacionesComponent {
   organizaciones: any[] = [];
   notificaciones: any[] = [];
 
-  columnas: string[] = ['quincena', 'matricula', 'nombre', 'detalle','notificacion'];
+  columnas: string[] = ['quincena', 'matricula', 'nombre', 'correo', 'detalle','notificacion'];
   detalleColumnas: string[] = ['fecha', 'concepto', 'descripcion', 'incEnt', 'incSal'];
 
   expandedRow: any = null;

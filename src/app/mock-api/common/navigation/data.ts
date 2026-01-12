@@ -57,12 +57,6 @@ export const defaultNavigation_admin: FuseNavigationItem[] = [
         icon    : 'heroicons_outline:document-chart-bar',
         children: [
             {
-                id   : 'reporte-trabajador',
-                title: 'Reporte de trabajador',
-                type : 'basic',
-                link : '/admin/reporte-trabajador'
-            },
-            {
                 id   : 'reporte-quincena',
                 title: 'Reporte de quincena',
                 type : 'basic',
