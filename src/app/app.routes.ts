@@ -74,5 +74,15 @@ export const appRoutes: Route[] = [
             initialData: initialDataResolver
         },
         loadChildren: () => import('app/modules/admin/admin.routes'),
+    },
+    {
+        path: 'delegado',
+        canActivate: [AuthGuard],
+        canActivateChild: [AuthGuard],
+        component: LayoutComponent,
+        resolve: {
+            initialData: initialDataResolver
+        },
+        loadChildren: () => import('app/modules/delegado/delegado.routes'),
     }
 ];

@@ -93,6 +93,49 @@ export const horizontalNavigation_admin: FuseNavigationItem[] = [
     }
 ];
 
+export const defaultNavigation_delegado: FuseNavigationItem[] = [
+    {
+        id   : 'home',
+        title: 'Home',
+        type : 'basic',
+        icon : 'heroicons_outline:home',
+        link : '/admin/home'
+    },
+    {
+        id   : 'notificaciones',
+        title: 'Notificaciones',
+        type : 'basic',
+        icon : 'heroicons_outline:envelope',
+        link : '/delegado/notificaciones'
+    }
+];
+export const compactNavigation_delegado: FuseNavigationItem[] = [
+    {
+        id   : 'example',
+        title: 'Example',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/example'
+    }
+];
+export const futuristicNavigation_delegado: FuseNavigationItem[] = [
+    {
+        id   : 'example',
+        title: 'Example',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/example'
+    }
+];
+export const horizontalNavigation_delegado: FuseNavigationItem[] = [
+    {
+        id   : 'example',
+        title: 'Example',
+        type : 'basic',
+        icon : 'heroicons_outline:chart-pie',
+        link : '/example'
+    }
+];
 
 
 //-----------------

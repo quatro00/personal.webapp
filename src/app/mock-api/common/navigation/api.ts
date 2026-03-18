@@ -11,6 +11,11 @@ import {
     defaultNavigation,
     futuristicNavigation,
     horizontalNavigation,
+
+    defaultNavigation_delegado,
+    compactNavigation_delegado,
+    horizontalNavigation_delegado,
+    futuristicNavigation_delegado,
     
 } from 'app/mock-api/common/navigation/data';
 import { cloneDeep } from 'lodash-es';
@@ -53,15 +58,22 @@ export class NavigationMockApi {
         console.log('ROLES',roles);
         if (roles != null) {
             if (roles.indexOf('Administrador') != -1 && rol == '') { rol = 'Administrador' }
-            if (roles.indexOf('Supervisor') != -1 && rol == '') { rol = 'Supervisor' }
+            if (roles.indexOf('Delegado sindical') != -1 && rol == '') { rol = 'Delegado sindical' }
             if (roles.indexOf('Responsable de area') != -1 && rol == '') { rol = 'Responsable de area' }
         }
-
+        
         if (rol == 'Administrador') {
             this._compactNavigation = compactNavigation_admin;
             this._defaultNavigation = defaultNavigation_admin;
             this._futuristicNavigation = futuristicNavigation_admin;
             this._horizontalNavigation = horizontalNavigation_admin;
+        }
+
+        if (rol == 'Delegado sindical') {
+            this._compactNavigation = compactNavigation_delegado;
+            this._defaultNavigation = defaultNavigation_delegado;
+            this._futuristicNavigation = futuristicNavigation_delegado;
+            this._horizontalNavigation = horizontalNavigation_delegado;
         }
 
         /*
