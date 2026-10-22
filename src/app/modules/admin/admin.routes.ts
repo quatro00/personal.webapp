@@ -8,6 +8,8 @@ import { CatalogoOrganizacionesComponent } from './catalogo-organizaciones/catal
 import { NotificacionesComponent } from 'app/modules/admin/notificaciones/notificaciones.component';
 import { ReporteTrabajadorComponent } from 'app/modules/admin/reporte-trabajador/reporte-trabajador.component';
 import { ReporteQuincenaComponent } from 'app/modules/admin/reporte-quincena/reporte-quincena.component';
+import { adminRoleGuard } from 'app/core/auth/guards/admin-role.guard';
+import { MatriculaExcluidasComponent } from './matricula-excluidas/matricula-excluidas.component';
 
 export default [
     {
@@ -21,6 +23,7 @@ export default [
             { path: 'notificaciones', component: NotificacionesComponent },
             { path: 'reporte-trabajador', component: ReporteTrabajadorComponent },
             { path: 'reporte-quincena', component: ReporteQuincenaComponent },
+            { path: 'matriculas-excluidas', component: MatriculaExcluidasComponent, canActivate: [adminRoleGuard] },
         ]
     },
 ] as Routes;

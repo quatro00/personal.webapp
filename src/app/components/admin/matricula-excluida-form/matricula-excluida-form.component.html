@@ -1,0 +1,133 @@
+<h2 mat-dialog-title>
+    {{ isEditMode
+        ? 'Editar matrícula excluida'
+        : 'Registrar matrícula excluida' }}
+</h2>
+
+<mat-dialog-content>
+
+    <form [formGroup]="form" class="flex flex-col gap-4 pt-2">
+
+        <!-- ORGANIZACIÓN -->
+        <mat-form-field appearance="outline" class="w-full">
+
+            <mat-label>Organización</mat-label>
+
+            <mat-select formControlName="organizacionId">
+
+                <mat-option value="">
+                    Seleccione una organización
+                </mat-option>
+
+                <mat-option
+                    *ngFor="let org of organizaciones"
+                    [value]="org.id">
+
+                    {{ org.nombre }}
+
+                </mat-option>
+
+            </mat-select>
+
+            <mat-error>
+                Debe seleccionar una organización.
+            </mat-error>
+
+        </mat-form-field>
+
+        <!-- MATRÍCULA -->
+        <mat-form-field appearance="outline" class="w-full">
+
+            <mat-label>Matrícula</mat-label>
+
+            <input
+                matInput
+                formControlName="matricula"
+                maxlength="50"
+                autocomplete="off"
+            />
+
+            <mat-error>
+                Capture una matrícula válida.
+            </mat-error>
+
+        </mat-form-field>
+
+        <!-- NOMBRE -->
+        <mat-form-field appearance="outline" class="w-full">
+
+            <mat-label>Nombre completo</mat-label>
+
+            <input
+                matInput
+                formControlName="nombre"
+                maxlength="250"
+                autocomplete="off"
+            />
+
+            <mat-error>
+                Capture el nombre completo.
+            </mat-error>
+
+        </mat-form-field>
+
+        <!-- CATEGORÍA -->
+        <mat-form-field appearance="outline" class="w-full">
+
+            <mat-label>Categoría</mat-label>
+
+            <input
+                matInput
+                formControlName="categoria"
+                maxlength="150"
+                autocomplete="off"
+            />
+
+            <mat-error>
+                Capture la categoría.
+            </mat-error>
+
+        </mat-form-field>
+
+    </form>
+
+</mat-dialog-content>
+
+<mat-dialog-actions align="end">
+
+    <!-- CANCELAR -->
+    <button
+        mat-stroked-button
+        type="button"
+        [disabled]="isLoading"
+        (click)="cancel()">
+
+        Cancelar
+
+    </button>
+
+    <!-- GUARDAR -->
+    <button
+        mat-flat-button
+        color="primary"
+        type="button"
+        [disabled]="isLoading || form.invalid"
+        (click)="save()">
+
+        <mat-icon *ngIf="!isLoading">
+            save
+        </mat-icon>
+
+        <mat-progress-spinner
+            *ngIf="isLoading"
+            [diameter]="20"
+            mode="indeterminate">
+        </mat-progress-spinner>
+
+        <span class="ml-2">
+            {{ isEditMode ? 'Actualizar' : 'Guardar' }}
+        </span>
+
+    </button>
+
+</mat-dialog-actions>
